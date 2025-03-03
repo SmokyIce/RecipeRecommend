@@ -21,6 +21,9 @@ public class RecipeController {
     public Result getRecipes() {
         List<Recipe> typeList = recipeService
                 .query().list();
+        for (Recipe recipe : typeList) {
+            recipe.setFeatureTags(recipe.getFeatureTags().replace("\\",""));
+        }
         return Result.ok(typeList);
     }
 

@@ -3,9 +3,7 @@ package com.douyin.controller;
 
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
-import com.douyin.dto.UserDTO;
 import com.douyin.service.IUserService;
-import com.douyin.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,14 +56,13 @@ public class UserController {
     @GetMapping("/me")
     public Result me(){
         // TODO获取当前登录的用户并返回
-        UserDTO user = UserHolder.getUser();
-        return Result.ok(user);
+        return Result.fail("功能未完成");
     }
 
     @GetMapping("/info/{id}")
     public Result info(@PathVariable("id") Long userId){
         // TODO 查询详情
-        return Result.ok();
+        return Result.fail("功能未完成");
     }
 
 }
