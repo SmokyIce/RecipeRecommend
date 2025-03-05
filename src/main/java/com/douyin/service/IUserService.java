@@ -3,6 +3,7 @@ package com.douyin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
+import com.douyin.dto.UserDTO;
 import com.douyin.entity.User;
 
 import javax.servlet.http.HttpSession;
@@ -20,5 +21,5 @@ public interface IUserService extends IService<User> {
 
     Result logout();
 
-    Result register(LoginFormDTO loginForm, HttpSession session);
+    Result register(UserDTO request, HttpSession session);
 }

@@ -3,20 +3,28 @@ package com.douyin.controller;
 
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
+import com.douyin.dto.UserDTO;
+import com.douyin.entity.User;
+import com.douyin.repository.UserRepository;
 import com.douyin.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
+
+import static com.douyin.utils.RegexUtils.isPwdInvalid;
 
 /**
  * <p>
  * 前端控制器
  * </p>
  *
- * @author 虎哥
- * @since 2021-12-22
+ * @author none
+ * @since 2025-3-3
  */
 @Slf4j
 @RestController
@@ -29,17 +37,6 @@ public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody LoginFormDTO loginForm, HttpSession session){
         // TODO 实现登录功能
-        //1.校验用户名密码
-        String name = loginForm.getName();
-        String password = loginForm.getPassword();
-        //2.一致则根据用户名查询信息
-        //使用
-        String pwd = userService.getById(name).getPassword();
-        if(password.equals(pwd)){
-
-        }
-        //3.存储token
-        //4.返回token
         return userService.login(loginForm, session);
     }
 
@@ -53,16 +50,23 @@ public class UserController {
         return userService.logout();
     }
 
-    @GetMapping("/me")
-    public Result me(){
-        // TODO获取当前登录的用户并返回
+    @GetMapping("/user")
+    public Result user(){
+        // TODO 获取当前登录的用户并返回
         return Result.fail("功能未完成");
     }
 
-    @GetMapping("/info/{id}")
-    public Result info(@PathVariable("id") Long userId){
-        // TODO 查询详情
-        return Result.fail("功能未完成");
+    @PostMapping("/register")
+    public Result info2(@RequestBody UserDTO request, HttpSession session){
+        //简单验证必填字段
+        if (request.getNickname() == null || request.getNickname().trim().isEmpty() ||
+                request.getPassword() == null || request.getPassword().trim().isEmpty() ||
+                request.getPhone() == null || request.getPhone().trim().isEmpty()
+        ){
+            return Result.fail("用户名、密码、电话均为必填项");
+        }
+
+        return userService.register(request, session);
     }
 
 }

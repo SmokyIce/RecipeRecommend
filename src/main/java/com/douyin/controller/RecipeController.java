@@ -1,5 +1,6 @@
 package com.douyin.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.douyin.dto.Result;
 import com.douyin.entity.Recipe;
 import com.douyin.service.IRecipeService;
@@ -21,9 +22,7 @@ public class RecipeController {
     public Result getRecipes() {
         List<Recipe> typeList = recipeService
                 .query().list();
-        for (Recipe recipe : typeList) {
-            recipe.setFeatureTags(recipe.getFeatureTags().replace("\\",""));
-        }
+        JSONUtil.toJsonStr(typeList);
         return Result.ok(typeList);
     }
 
