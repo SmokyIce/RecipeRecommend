@@ -22,4 +22,6 @@ public interface IUserService extends IService<User> {
     Result logout();
 
     Result register(UserDTO request, HttpSession session);
+
+    Result getUser();
 }

@@ -3,6 +3,9 @@ package com.douyin.utils;
 import com.douyin.entity.User;
 
 public class UserHolder {
+    /*
+    将用户存入线程
+     */
     private static final ThreadLocal<User> tl = new ThreadLocal<>();
 
     public static void saveUser(User user){

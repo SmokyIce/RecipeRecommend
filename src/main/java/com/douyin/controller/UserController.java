@@ -9,6 +9,7 @@ import com.douyin.repository.UserRepository;
 import com.douyin.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,13 +48,14 @@ public class UserController {
     @PostMapping("/logout")
     public Result logout(){
         // TODO 实现登出功能
+        
         return userService.logout();
     }
 
     @GetMapping("/user")
     public Result user(){
         // TODO 获取当前登录的用户并返回
-        return Result.fail("功能未完成");
+        return userService.getUser();
     }
 
     @PostMapping("/register")

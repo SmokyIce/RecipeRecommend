@@ -1,6 +1,8 @@
 package com.douyin.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.jwt.JWT;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
@@ -13,6 +15,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import java.util.Date;
+
+import static com.douyin.utils.RedisConstants.LOGIN_USER_TTL;
 import static com.douyin.utils.RegexUtils.isPwdInvalid;
 import static com.douyin.utils.SystemConstants.USER_NAME_PREFIX;
 
@@ -27,10 +32,29 @@ import static com.douyin.utils.SystemConstants.USER_NAME_PREFIX;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
+    /**
+     * 登录
+     * @return 登录用户id
+     */
     @Override
     public Result login(LoginFormDTO loginForm, HttpSession session) {
-        //TODO 未完成
-        return Result.ok();
+        //1.校验手机密码
+        String phone = loginForm.getPhone();
+        String password = loginForm.getPassword();
+        //2.获取数据库密码
+        User user = null;
+        if(StrUtil.isNotBlank(phone) && StrUtil.isNotBlank(password)){
+            user = query().eq("phone", phone).eq("password", password).one();
+            System.out.println(user);
+        }
+        //3.不匹配则返回错误信息
+        if(user == null){
+            return Result.fail("用户名密码错误");
+        }
+        //4.匹配则生成token
+        String token = user.getUserId();
+        //5.返回token
+        return Result.ok(token);
     }
 
     @Override
@@ -41,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public Result register(UserDTO request, HttpSession session) {
-        //TODO 注册
+        //注册
         //1.查询手机号是否被占用
         User existUser = query().eq("phone", request.getPhone()).one();
         if(existUser != null){
@@ -60,8 +84,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setAge(0);
 
         //4.将用户存入数据库
-        System.out.println(user);
         save(user);
         return Result.fail("注册成功");
+    }
+
+    @Override
+    public Result getUser() {
+        // 1.未检测到登录信息，返回错误信息
+
+        // 2.获取到用户信息，返回用户信息
+
+        return null;
     }
 }
