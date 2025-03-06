@@ -3,21 +3,14 @@ package com.douyin.controller;
 
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
-import com.douyin.dto.UserDTO;
-import com.douyin.entity.User;
-import com.douyin.repository.UserRepository;
+import com.douyin.dto.UpdateUserDTO;
+import com.douyin.dto.UserRegisterDTO;
 import com.douyin.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.UUID;
-
-import static com.douyin.utils.RegexUtils.isPwdInvalid;
 
 /**
  * <p>
@@ -53,13 +46,13 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public Result user(){
-        // TODO 获取当前登录的用户并返回
-        return userService.getUser();
+    public Result user(@RequestHeader(value = "authorization", required = false) String token){
+        // 获取token并返回nickname
+        return userService.getUser(token);
     }
 
     @PostMapping("/register")
-    public Result info2(@RequestBody UserDTO request, HttpSession session){
+    public Result info2(@RequestBody UserRegisterDTO request, HttpSession session){
         //简单验证必填字段
         if (request.getNickname() == null || request.getNickname().trim().isEmpty() ||
                 request.getPassword() == null || request.getPassword().trim().isEmpty() ||
@@ -71,4 +64,9 @@ public class UserController {
         return userService.register(request, session);
     }
 
+    @PostMapping("/update")
+    public Result update(@RequestHeader(value = "authorization", required = false) String token,@RequestBody UpdateUserDTO request){
+        //返回修改成功与否
+        return userService.updateUser(token, request);
+    }
 }

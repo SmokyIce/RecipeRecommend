@@ -2,22 +2,18 @@ package com.douyin.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.jwt.JWT;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
-import com.douyin.dto.UserDTO;
+import com.douyin.dto.UpdateUserDTO;
+import com.douyin.dto.UserRegisterDTO;
 import com.douyin.entity.User;
 import com.douyin.mapper.UserMapper;
 import com.douyin.service.IUserService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
-import java.util.Date;
-
-import static com.douyin.utils.RedisConstants.LOGIN_USER_TTL;
 import static com.douyin.utils.RegexUtils.isPwdInvalid;
 import static com.douyin.utils.SystemConstants.USER_NAME_PREFIX;
 
@@ -45,7 +41,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         User user = null;
         if(StrUtil.isNotBlank(phone) && StrUtil.isNotBlank(password)){
             user = query().eq("phone", phone).eq("password", password).one();
-            System.out.println(user);
         }
         //3.不匹配则返回错误信息
         if(user == null){
@@ -64,7 +59,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Result register(UserDTO request, HttpSession session) {
+    public Result register(UserRegisterDTO request, HttpSession session) {
         //注册
         //1.查询手机号是否被占用
         User existUser = query().eq("phone", request.getPhone()).one();
@@ -89,11 +84,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public Result getUser() {
-        // 1.未检测到登录信息，返回错误信息
+    public Result getUser(String token) {
+        // 1.检测token对应的用户
+        System.out.println(token);
+        // 2.未检测到登录信息，返回错误信息
+        User user = query().eq("user_id", token).one();
+        // 3.获取到用户信息，返回用户信息
+        if(user == null){
+            return Result.fail("用户错误");
+        }
+        return Result.ok(user.getNickname());
+    }
 
-        // 2.获取到用户信息，返回用户信息
-
-        return null;
+    @Override
+    public Result updateUser(String token, UpdateUserDTO request) {
+        //1.根据token查用户信息
+        User user = query().eq("user_id", token).one();
+        //2.没查到，返回错误
+        if(user == null){
+            return Result.fail("用户不存在，请重新登录");
+        }
+        //3.查到了，修改数据库
+        int age = request.getAge();
+        String nickname = request.getNickname();
+        user.setAge(age);
+        user.setNickname(nickname);
+        //4.修改数据库
+        updateById(user);
+        //5.返回数据
+        return Result.ok("修改成功！");
     }
 }
