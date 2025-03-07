@@ -4,17 +4,20 @@ import cn.hutool.json.JSONUtil;
 import com.douyin.dto.Result;
 import com.douyin.entity.Recipe;
 import com.douyin.service.IRecipeService;
+import com.douyin.service.IUserRecipeServer;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/recipes")
 public class RecipeController {
 
     @Resource
     public IRecipeService recipeService;
+    @Resource
+    public IUserRecipeServer userRecipeServer;
     /**
      * 获得全部餐品
      */
@@ -26,4 +29,9 @@ public class RecipeController {
         return Result.ok(typeList);
     }
 
+    @GetMapping("/management")
+    public Result getManagement(@RequestHeader(value = "authorization", required = false) String token) {
+        // 返回数据
+        return userRecipeServer.getRecipes(token);
+    }
 }

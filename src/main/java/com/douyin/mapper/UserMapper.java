@@ -1,7 +1,9 @@
 package com.douyin.mapper;
 
+import com.douyin.dto.UserRecipeDTO;
 import com.douyin.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.yulichang.base.MPJBaseMapper;
 
 /**
  * <p>

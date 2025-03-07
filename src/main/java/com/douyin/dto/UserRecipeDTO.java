@@ -1,0 +1,22 @@
+package com.douyin.dto;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+
+
+@Data
+public class UserRecipeDTO {
+    //餐品id
+    private String recipeId;
+    //餐品名称
+    private String name;
+    //图片地址
+    private String image;
+    //烹饪方法
+    private String cookingMethod;
+    //用户评分
+    private int userRating;
+    //评论
+    private String comment;
+}

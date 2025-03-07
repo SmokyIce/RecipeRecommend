@@ -26,8 +26,8 @@ public class Recipe implements Serializable {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    @TableId(value = "recipe_id", type = IdType.AUTO)
+    private String recipeId;
 
     /**
      * 菜品名称

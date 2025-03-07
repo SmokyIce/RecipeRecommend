@@ -107,8 +107,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //3.查到了，修改数据库
         int age = request.getAge();
         String nickname = request.getNickname();
+        if(age >= 150 || age < 0){
+            return Result.fail("年龄异常，请重新修改");
+        }
         user.setAge(age);
-        user.setNickname(nickname);
+        if(StrUtil.isNotBlank(nickname)){
+            user.setNickname(nickname);
+        }
         //4.修改数据库
         updateById(user);
         //5.返回数据
