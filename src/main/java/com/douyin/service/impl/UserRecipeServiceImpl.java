@@ -17,12 +17,12 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class UserRecipeServiceImpl extends ServiceImpl<UserRecipeMapper, UserRecipeDTO> implements IUserRecipeServer{
+public class UserRecipeServiceImpl extends ServiceImpl<UserRecipeMapper, UserRecipe> implements IUserRecipeServer{
 
     @Autowired
     private final UserRecipeMapper userRecipeMapper;
-
-    private final MPJLambdaWrapper<UserRecipeDTO> mpjLambdaWrapper = new MPJLambdaWrapper();
+    //执行sql查询创建的mpjLambdaWrapper对象
+    private final MPJLambdaWrapper<UserRecipe> mpjLambdaWrapper = new MPJLambdaWrapper();
 
     public UserRecipeServiceImpl(UserRecipeMapper userRecipeMapper) {
         this.userRecipeMapper = userRecipeMapper;
@@ -35,13 +35,13 @@ public class UserRecipeServiceImpl extends ServiceImpl<UserRecipeMapper, UserRec
             //2.不存在返回请登录
             return Result.fail("请重新登录");
         }
-        //3.根据token查找连接的数据表
+        //3.根据token查找连接的数据表，UserRecipe表和Recipe表连接查询。
         mpjLambdaWrapper.select(UserRecipe::getComment,UserRecipe::getUserRating,UserRecipe::getId)
-                .select(Recipe::getName, Recipe::getImage, Recipe::getCookingMethod)
+                .select(Recipe::getName, Recipe::getImage, Recipe::getCookingMethod,Recipe::getRecipeId)
                 .leftJoin(Recipe.class,Recipe::getRecipeId,UserRecipe::getRecipeId)
                 .eq(UserRecipe::getUserId,token);
+        //将返回数据存入的对象和mpjLambdaWrapper对象传入，用list<UserRecipeDTO>接收
         List<UserRecipeDTO> userRecipes = userRecipeMapper.selectJoinList(UserRecipeDTO.class, mpjLambdaWrapper);
-        System.out.println(userRecipes);
         return Result.ok(userRecipes);
     }
 }

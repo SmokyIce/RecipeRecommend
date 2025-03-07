@@ -64,7 +64,7 @@ public class UserController {
         return userService.register(request, session);
     }
 
-    @PostMapping("/update")
+    @PostMapping("/updateUser")
     public Result update(@RequestHeader(value = "authorization", required = false) String token,@RequestBody UpdateUserDTO request){
         //返回修改成功与否
         return userService.updateUser(token, request);
