@@ -6,11 +6,11 @@ import com.douyin.dto.Result;
 import com.douyin.dto.UpdateUserDTO;
 import com.douyin.dto.UserRegisterDTO;
 import com.douyin.service.IUserService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * <p>
@@ -28,31 +28,41 @@ public class UserController {
     @Resource
     private IUserService userService;
 
+    /**
+     * 登录功能
+     * @param loginForm 登录信息表，包含密码，用户名
+     * @return 登录是否成功，成功返回登录token，失败返回用户信息
+     */
     @PostMapping("/login")
-    public Result login(@RequestBody LoginFormDTO loginForm, HttpSession session){
-        // TODO 实现登录功能
-        return userService.login(loginForm, session);
+    public Result login(@RequestBody LoginFormDTO loginForm){
+        // 实现登录功能
+        return userService.login(loginForm);
     }
 
     /**
      * 登出功能
-     * @return 无
+     * @return 前端删除token，自动登出成功
      */
     @PostMapping("/logout")
     public Result logout(){
-        // TODO 实现登出功能
-        
+        // 实现登出功能
         return userService.logout();
     }
-
+    /**
+     * 用户已经登录，则根据用户登录后带的token将user的昵称返回
+     */
     @GetMapping("/user")
     public Result user(@RequestHeader(value = "authorization", required = false) String token){
-        // 获取token并返回nickname
         return userService.getUser(token);
     }
 
+    /**
+     * 注册功能
+     * @param request 包含用户注册信息
+     * @return 返回是否注册成功
+     */
     @PostMapping("/register")
-    public Result info2(@RequestBody UserRegisterDTO request, HttpSession session){
+    public Result info2(@RequestBody UserRegisterDTO request){
         //简单验证必填字段
         if (request.getNickname() == null || request.getNickname().trim().isEmpty() ||
                 request.getPassword() == null || request.getPassword().trim().isEmpty() ||
@@ -61,9 +71,15 @@ public class UserController {
             return Result.fail("用户名、密码、电话均为必填项");
         }
 
-        return userService.register(request, session);
+        return userService.register(request);
     }
 
+    /**
+     * 更新用户信息
+     * @param token 唯一定位用户
+     * @param request 请求包含传来的更新信息
+     * @return
+     */
     @PostMapping("/updateUser")
     public Result update(@RequestHeader(value = "authorization", required = false) String token,@RequestBody UpdateUserDTO request){
         //返回修改成功与否

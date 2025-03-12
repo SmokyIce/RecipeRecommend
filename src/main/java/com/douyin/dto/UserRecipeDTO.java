@@ -7,6 +7,8 @@ import lombok.Data;
 
 @Data
 public class UserRecipeDTO {
+    //评价id
+    private Integer id;
     //餐品id
     private String recipeId;
     //餐品名称

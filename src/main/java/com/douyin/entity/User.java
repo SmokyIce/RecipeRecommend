@@ -10,9 +10,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.io.Serializable;
 
 /**
@@ -57,7 +57,7 @@ public class User implements Serializable {
      * 用户年龄
      */
     @Column(nullable = false)
-    private int age = 0;
+    private Integer age = 0;
 
     /**
      * 餐品偏好

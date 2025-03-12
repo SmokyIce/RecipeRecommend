@@ -1,13 +1,14 @@
 package com.douyin.utils;
 
+import com.douyin.entity.User;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -20,11 +21,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
         // 有用户放行
-        try{
-
-        }catch (Exception e){
-
-        }
+        UserHolder.saveUser(new User());
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        UserHolder.removeUser();
     }
 }

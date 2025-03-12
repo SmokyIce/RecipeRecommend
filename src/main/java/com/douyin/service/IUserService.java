@@ -7,7 +7,6 @@ import com.douyin.dto.UpdateUserDTO;
 import com.douyin.dto.UserRegisterDTO;
 import com.douyin.entity.User;
 
-import javax.servlet.http.HttpSession;
 
 /**
  * <p>
@@ -18,11 +17,11 @@ import javax.servlet.http.HttpSession;
  */
 public interface IUserService extends IService<User> {
 
-    Result login(LoginFormDTO loginForm, HttpSession session);
+    Result login(LoginFormDTO loginForm);
 
     Result logout();
 
-    Result register(UserRegisterDTO request, HttpSession session);
+    Result register(UserRegisterDTO request);
 
     Result getUser(String token);
 

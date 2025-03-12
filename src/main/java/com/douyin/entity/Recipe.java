@@ -58,12 +58,12 @@ public class Recipe implements Serializable {
     /**
      * 卡路里
      */
-    private int calories;
+    private Integer calories;
 
     /**
      * 糖分
      */
-    private int sugar;
+    private Integer sugar;
 
     /**
      * 盐
