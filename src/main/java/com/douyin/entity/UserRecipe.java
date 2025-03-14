@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
@@ -25,8 +24,10 @@ public class UserRecipe {
     private String recipeId;
     //用户评分
     @TableField(value = "user_rating")
-    private Integer userRating;
+    private Integer userRating = 0;
     //评论
     @TableField(value = "comment")
-    private String comment;
+    private String comment = "";
+
+
 }

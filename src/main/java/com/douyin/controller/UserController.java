@@ -35,6 +35,7 @@ public class UserController {
      */
     @PostMapping("/login")
     public Result login(@RequestBody LoginFormDTO loginForm){
+        log.info("登录信息:{}", loginForm);
         // 实现登录功能
         return userService.login(loginForm);
     }

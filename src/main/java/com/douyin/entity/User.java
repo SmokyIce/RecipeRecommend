@@ -23,8 +23,6 @@ import java.io.Serializable;
  * @author smkice
  * @since 2025-3-3
  */
-@Setter
-@Getter
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)

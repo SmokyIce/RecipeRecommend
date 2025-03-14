@@ -22,9 +22,6 @@ spring:
     default-property-inclusion: non_null # JSON处理时忽略非空字段
   jpa:
     open-in-view: false
-mybatis-plus:
-  type-aliases-package: com.hmdp.entity # 别名扫描包
-  mapper-locations: classpath:douyin/mapper/*.xml
 logging:
   level:
     com.hmdp: debug
