@@ -27,10 +27,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("users")
-@Entity
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 
     /**
      * 用户名

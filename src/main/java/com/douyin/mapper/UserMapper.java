@@ -1,9 +1,8 @@
 package com.douyin.mapper;
 
-import com.douyin.dto.UserRecipeDTO;
 import com.douyin.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.github.yulichang.base.MPJBaseMapper;
+import org.apache.ibatis.annotations.*;
 
 /**
  * <p>
@@ -12,6 +11,10 @@ import com.github.yulichang.base.MPJBaseMapper;
  *
  * @since 2025-3-3
  */
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
+
+    @Update("UPDATE users set recipe_preferences = #{recipe_preferences} where user_id = #{user_id}")
+    int updatePreference(@Param("recipe_preferences")String recipe_preferences, @Param("user_id") String user_id);
 
 }

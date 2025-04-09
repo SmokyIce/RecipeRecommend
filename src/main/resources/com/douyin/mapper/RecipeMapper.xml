@@ -3,5 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.douyin.mapper.RecipeMapper">
-
+    <select id="getIngredientsDTO" parameterType="string" resultType="com.douyin.dto.RecipeIngredientsDTO">
+        SELECT r.recipe_id AS recipeId,
+               ri.serving_count AS servingCount,
+               i.ingredient_name ingredientName,
+               i.unit_name unitName
+        FROM recipes r
+                 JOIN recipe_ingredients ri ON r.recipe_id = ri.recipe_id
+                 JOIN ingredients i ON ri.ingredient_id = i.ingredient_id
+        WHERE r.recipe_id = #{recipeId};
+    </select>
+    <select id="getRecipes" parameterType="string" resultType="com.douyin.entity.Recipe">
+        SELECT recipe_id AS recipeId,
+               name AS name,
+               feature_tags AS featureTags,
+               image AS image,
+               cooking_method AS cookingMethod,
+               suitable_time AS suitableTime,
+               calories AS calories,
+               carbohydrate AS carbohydrate,
+               salt AS salt,
+               rating AS rating,
+               instructions AS instructions,
+               fat AS fat,
+               protein AS protein
+        FROM recipes
+    </select>
 </mapper>

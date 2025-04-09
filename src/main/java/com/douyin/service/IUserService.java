@@ -26,4 +26,8 @@ public interface IUserService extends IService<User> {
     Result getUser(String token);
 
     Result updateUser(String token, UpdateUserDTO request);
+
+    Result savePreferences(String token, String request);
+
+    Result getPreference(String token);
 }

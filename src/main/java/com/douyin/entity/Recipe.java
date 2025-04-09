@@ -4,12 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import com.fasterxml.jackson.core.type.TypeReference;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -58,12 +63,27 @@ public class Recipe implements Serializable {
     /**
      * 卡路里
      */
-    private Integer calories;
+    private BigDecimal calories;
 
     /**
-     * 糖分
+     * 碳水化合物
      */
-    private Integer sugar;
+    private BigDecimal carbohydrate;
+
+    /**
+     * 脂肪
+     */
+    private BigDecimal fat;
+
+    /**
+     * 蛋白质
+     */
+    private BigDecimal protein;
+
+    /**
+     *
+     */
+    private String instructions;
 
     /**
      * 盐
@@ -75,11 +95,14 @@ public class Recipe implements Serializable {
      */
     private BigDecimal rating;
 
-
-    /**
-     * 建议
-     */
-    private String instructions;
-
-
+    // 将 featureTags JSON 字符串解析为 List<String>
+    public List<String> getFeatureTagsList() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(featureTags, new TypeReference<List<String>>() {});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
 }

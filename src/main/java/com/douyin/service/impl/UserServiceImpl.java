@@ -2,6 +2,7 @@ package com.douyin.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
@@ -10,6 +11,7 @@ import com.douyin.dto.UserRegisterDTO;
 import com.douyin.entity.User;
 import com.douyin.mapper.UserMapper;
 import com.douyin.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static com.douyin.utils.RegexUtils.isPwdInvalid;
@@ -25,6 +27,13 @@ import static com.douyin.utils.SystemConstants.USER_NAME_PREFIX;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+
+    @Autowired
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     /**
      * 登录
@@ -124,5 +133,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         updateById(user);
         //5.返回数据
         return Result.ok("修改成功！");
+    }
+
+    @Override
+    public Result savePreferences(String userId, String request) {
+        if(StrUtil.isEmpty(userId)){
+            return Result.fail("请登录");
+        }
+        System.out.println(request);
+        return userMapper.updatePreference(request, userId) == 1 ? Result.ok("修改成功！") : Result.ok("修改失败！");
+    }
+
+    @Override
+    public Result getPreference(String token) {
+        User user = query().eq("user_id", token).one();
+        if(user == null){
+            return Result.fail("请登录");
+        }
+        String preferences = StrUtil.subBetween(user.getRecipePreferences(), "{\"recipePreferences\":", "}");
+        return Result.ok(preferences);
     }
 }

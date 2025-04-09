@@ -10,4 +10,10 @@ public class AddUserRecipeDTO {
 
     // 食谱 ID，由前端传入
     private String recipeId;
+
+    // 食谱评分
+    private Integer rating;
+
+    // 食谱评价
+    private String comment;
 }

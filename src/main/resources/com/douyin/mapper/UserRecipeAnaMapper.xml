@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douyin.mapper.UserRecipeAnaMapper">
+    <select id="getUserRecipesAna" parameterType="string" resultType="com.douyin.dto.UserRecipeAnaDTO">
+        SELECT
+            ur.id,
+            ur.recipe_id AS recipeId,
+            r.name AS name,
+            r.image AS image,
+            r.cooking_method AS cookingMethod,
+            r.suitable_time AS suitableTime,
+            r.calories AS calories,
+            r.carbohydrate AS carbohydrate,
+            r.salt AS salt
+        FROM user_recipes ur
+                 INNER JOIN recipes r ON ur.recipe_id = r.recipe_id
+        WHERE ur.user_id = #{userId}
+    </select>
+</mapper>

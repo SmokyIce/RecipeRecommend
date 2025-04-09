@@ -86,4 +86,19 @@ public class UserController {
         //返回修改成功与否
         return userService.updateUser(token, request);
     }
+
+    //savePreferences
+    @PostMapping("/savePreferences")
+    public Result savePreferences(@RequestHeader(value = "authorization", required = false) String token,
+                                  @RequestBody String request){
+        return userService.savePreferences(token, request);
+    }
+
+    // TODO userPreference返回已经选择的项
+    @GetMapping("getPreferences")
+    public Result getPreference(@RequestHeader(value = "authorization", required = false) String token){
+        return userService.getPreference(token);
+    }
+
+
 }
