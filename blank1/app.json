@@ -1,0 +1,50 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/analysis/analysis",
+        "pages/search/search",
+        "pages/user/user",
+        "pages/recipe/recipe",
+        "pages/login/login",
+        "pages/register/register",
+        "pages/userManagement/userManagement",
+        "pages/recipeManagement/recipeManagement",
+        "pages/preferencesManagement/preferencesManagement"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "智能食谱",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "color": "#161823",
+        "selectedColor": "#FE2C55",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "主页",
+                "iconPath": "./image/house.png",
+                "selectedIconPath": "./image/house-selected.png"
+            },
+            {
+                "pagePath": "pages/analysis/analysis",
+                "text": "智能分析",
+                "iconPath": "./image/analysis.png",
+                "selectedIconPath": "./image/analysis-selected.png"
+            },
+            {
+                "pagePath": "pages/search/search",
+                "text": "食谱搜索",
+                "iconPath": "./image/search.png",
+                "selectedIconPath": "./image/search-selected.png"
+            },
+            {
+                "pagePath": "pages/user/user",
+                "text": "登录",
+                "iconPath": "./image/user.png",
+                "selectedIconPath": "./image/user-selected.png"
+            }
+        ]
+    }
+}

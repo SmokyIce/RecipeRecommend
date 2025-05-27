@@ -1,0 +1,51 @@
+<!-- e:\douyin\miniprogram\blank1\pages\search\search.ttml -->
+<view class="container">  
+  <!-- 搜索输入框 -->  
+  <view class="search-bar">  
+    <input  
+      type="text"  
+      placeholder="请输入关键词搜索食谱"  
+      bindinput="onSearchInput"  
+      value="{{searchText}}"  
+      class="search-input"  
+    />  
+  </view>  
+
+  <!-- 搜索结果列表 -->  
+  <view class="recipe-list">  
+    <block tt:for="{{filteredRecipes}}" tt:key="id">  
+      <view class="recipe-item" data-id="{{item.recipeId}}" bindtap="goToRecipe">  
+        <image class="recipe-image" src="{{item.image}}" mode="aspectFill"></image>  
+        <view class="recipe-info">  
+          <text class="recipe-title">{{item.name}}</text>  
+
+          <!-- 详情信息：烹饪方式与适合时段分别换行显示 -->  
+          <view class="recipe-detail">  
+            <text class="detail-item">烹饪方式：{{item.cookingMethod}}</text>  
+            <text class="detail-item">适合时段：{{item.suitableTime}}</text>  
+          </view>  
+
+          <!-- 标签区 -->  
+          <view class="recipe-tags">  
+            <text class="tags-label">标签：</text>  
+            <block tt:for="{{item.featureTags}}" tt:key="index">  
+              <text class="tag">{{item}}</text>  
+            </block>  
+          </view>  
+
+          <!-- 营养信息 -->  
+          <view class="nutrition">  
+            <text class="nutrition-item">热量：{{item.calories}} kcal</text>  
+            <text class="nutrition-item">碳水化合物：{{item.carbohydrate}} g</text>  
+            <text class="nutrition-item">盐：{{item.salt}} g</text>  
+          </view>  
+
+          <!-- 添加到我的食谱按钮 -->  
+          <button class="add-btn" catchtap="handleAddRecipe" data-id="{{item.recipeId}}">  
+            添加到我的食谱  
+          </button>  
+        </view>  
+      </view>  
+    </block>  
+  </view>  
+</view>  

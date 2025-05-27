@@ -1,0 +1,163 @@
+/* 页面整体 */  
+.container {  
+  padding: 10px;  
+  background-color: #f9f9f9;  
+}  
+
+/* 页面标题 */  
+.header {  
+  font-size: 32px;  
+  text-align: center;  
+  margin: 20px 0;  
+  font-weight: bold;  
+  color: #333;  
+}  
+
+/* 今日推荐区域 */  
+.today-section {  
+  margin: 10px 0;  
+  padding: 10px;  
+  background-color: #fff;  
+  border-radius: 8px;  
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);  
+}  
+
+.section-header {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  border-bottom: 1px solid #eee;  
+  padding-bottom: 8px;  
+  margin-bottom: 10px;  
+}  
+
+.section-title {  
+  font-size: 24px;  
+  font-weight: bold;  
+  color: #333;  
+}  
+
+.btn-add {  
+  background-color: #1aad19;  
+  color: #fff;  
+  border: none;  
+  padding: 6px 12px;  
+  border-radius: 4px;  
+}  
+
+/* 主分类菜单 */  
+.category-menu {  
+  display: flex;  
+  justify-content: space-around;  
+  margin: 15px 0;  
+}  
+
+.cat-btn {  
+  background-color: #fff;  
+  border: 1px solid #ddd;  
+  border-radius: 20px;  
+  padding: 8px 16px;  
+  font-size: 14px;  
+  color: #333;  
+}  
+
+/* 子菜单 */  
+.sub-menu {  
+  display: flex;  
+  justify-content: space-around;  
+  margin-bottom: 10px;  
+}  
+
+.sub-btn {  
+  background-color: #f0f0f0;  
+  border: none;  
+  padding: 6px 12px;  
+  border-radius: 20px;  
+  font-size: 12px;  
+  color: #666;  
+}  
+
+/* 食谱列表 */  
+.recipe-list {  
+  margin: 10px 0;  
+}  
+
+.recipe-item {  
+  display: flex;  
+  margin-bottom: 15px;  
+  padding: 10px;  
+  background-color: #fff;  
+  border-radius: 8px;  
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);  
+}  
+
+.recipe-image {  
+  width: 90px;  
+  height: 90px;  
+  border-radius: 8px;  
+  margin-right: 10px;  
+}  
+
+.recipe-info {  
+  flex: 1;  
+}  
+
+.recipe-title {  
+  font-size: 18px;  
+  font-weight: bold;  
+  color: #333;  
+  margin-bottom: 6px;  
+}  
+
+.recipe-detail {  
+  font-size: 14px;  
+  color: #666;  
+  margin-bottom: 6px;  
+}  
+
+.detail-item {  
+  display: block;  
+}  
+
+.recipe-tags {  
+  font-size: 12px;  
+  color: #999;  
+  margin-bottom: 6px;  
+}  
+
+.tag {  
+  margin-right: 4px;  
+}  
+
+.nutrition {  
+  font-size: 12px;  
+  color: #999;  
+  margin-bottom: 6px;  
+}  
+
+.nutrition-item {  
+  margin-right: 8px;  
+}  
+
+.add-btn {  
+  background-color: #1aad19;  
+  color: #fff;  
+  border: none;  
+  padding: 4px 8px;  
+  border-radius: 4px;  
+  font-size: 12px;  
+}  
+
+/* 底部导航 */  
+.nav-buttons {  
+  text-align: center;  
+  margin: 20px 0;  
+}  
+
+.btn-nav {  
+  background-color: #0081ff;  
+  color: #fff;  
+  padding: 10px 20px;  
+  border: none;  
+  border-radius: 6px;  
+}  

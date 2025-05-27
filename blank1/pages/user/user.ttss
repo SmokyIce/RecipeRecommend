@@ -1,0 +1,56 @@
+.container {  
+  padding: 20px;  
+  background-color: #f8f8f8;  
+  min-height: 100%;  
+}  
+
+.user-info {  
+  margin-bottom: 40px;  
+}  
+
+.nickname {  
+  font-size: 24px;  
+  font-weight: bold;  
+  color: #333;  
+}  
+
+.age {  
+  font-size: 18px;  
+  color: #666;  
+  margin-top: 10px;  
+}  
+
+.actions {  
+  display: flex;  
+  flex-direction: column;  
+  gap: 20px;  
+}  
+
+.action-button {  
+  width: 100%;  
+  padding: 15px;  
+  background-color: #4CAF50;  
+  color: #fff;  
+  border: none;  
+  border-radius: 5px;  
+  text-align: center;  
+  font-size: 16px;  
+}  
+
+.logout-btn {  
+  background-color: #f44336;  
+}  
+
+.register-btn {  
+  background-color: #2196F3;  
+}  
+
+.not-login {  
+  text-align: center;  
+}  
+
+.notice {  
+  font-size: 20px;  
+  color: #333;  
+  margin-bottom: 20px;  
+}  

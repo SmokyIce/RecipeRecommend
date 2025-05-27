@@ -1,0 +1,25 @@
+<!-- e:\douyin\miniprogram\blank1\pages\user\user.ttml -->
+<view class="container">  
+  <block tt:if="{{isLoggedIn}}">  
+    <!-- 已登录状态：显示个人信息和按钮 -->  
+    <view class="user-info">  
+      <text class="nickname">用户名：{{userInfo.nickname}}</text>  
+    </view>  
+    <view class="actions">  
+      <button class="action-button" bindtap="handleManageRecipes">管理我的食谱</button>  
+      <button class="action-button userInfo-btn" bindtap="handleUserInfo">管理用户信息</button>  
+      <button class="action-button preferences-btn" bindtap="handleUserPreferences">管理用户偏好</button>  
+      <button class="action-button logout-btn" bindtap="handleLogout">登出</button>  
+    </view>  
+  </block>  
+  <block wx:else>  
+    <!-- 未登录状态：显示登录和注册按钮 -->  
+    <view class="not-login">  
+      <text class="notice">您还未登录</text>  
+      <view class="actions">  
+        <button class="action-button" bindtap="handleLogin">登录</button>  
+        <button class="action-button register-btn" bindtap="handleRegister">注册</button>  
+      </view>  
+    </view>  
+  </block>  
+</view>    

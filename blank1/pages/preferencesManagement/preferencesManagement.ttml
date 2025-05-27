@@ -1,0 +1,52 @@
+<!-- e:\douyin\miniprogram\VER0.11\blank1\pages\preferencesManagement\preferencesManagement.ttml -->
+<view class="container">  
+    <!-- 页面标题 -->  
+    <view class="page-title">饮食偏好设置</view>  
+    
+    <!-- 两侧偏好设置区域 -->  
+    <view class="preferences-container">  
+      <!-- 左侧：身体健康偏好，每行一个 -->  
+      <view class="panel left-panel">  
+        <view class="panel-title">身体健康偏好</view>  
+        <block tt:for="{{healthPreferences}}" tt:for-index="index" tt:for-item="item">  
+          <view class="row">  
+            <button class="pref-button full-width {{item.selected ? 'selected' : ''}}"   
+                    data-index="{{index}}"   
+                    bindtap="toggleHealthPreference">  
+              {{item.label}}  
+            </button>  
+          </view>  
+        </block>  
+      </view>  
+      
+      <!-- 右侧：食谱特征偏好，每行两个 -->  
+      <view class="panel right-panel">  
+        <view class="panel-title">食谱特征偏好</view>  
+        <block tt:for="{{recipeFeaturePreferences}}" tt:for-index="index" tt:for-item="item">  
+          <!-- 只处理偶数索引开始一行 -->  
+          <block tt:if="{{index % 2 === 0}}">  
+            <view class="row">  
+              <button class="pref-button half-width {{item.selected ? 'selected' : ''}}"   
+                      data-index="{{index}}"   
+                      bindtap="toggleFeaturePreference">  
+                {{item.label}}  
+              </button>  
+              <block tt:if="{{recipeFeaturePreferences[index+1]}}">  
+                <button class="pref-button half-width {{recipeFeaturePreferences[index+1].selected ? 'selected' : ''}}"   
+                        data-index="{{index+1}}"   
+                        bindtap="toggleFeaturePreference">  
+                  {{recipeFeaturePreferences[index+1].label}}  
+                </button>  
+              </block>  
+            </view>  
+          </block>  
+        </block>  
+      </view>  
+    </view>  
+    
+    <!-- 底部按钮区域 -->  
+    <view class="actions-container">  
+      <button class="action-button submit" bindtap="submitPreferences">提交</button>  
+      <button class="action-button clear" bindtap="clearPreferences">清空</button>  
+    </view>  
+  </view>  

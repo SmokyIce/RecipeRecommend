@@ -1,0 +1,68 @@
+/* e:\douyin\miniprogram\blank1\pages\analysis\analysis.ttss */  
+.container {  
+  padding: 20px;  
+  background-color: #f7f8fa;  
+}  
+.title {  
+  font-size: 26px;  
+  text-align: center;  
+  margin-bottom: 24px;  
+  color: #333;  
+  font-weight: bold;  
+}  
+.box {  
+  border: 1px solid #e0e0e0;  
+  border-radius: 8px;  
+  padding: 16px;  
+  margin-bottom: 20px;  
+  background-color: #ffffff;  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+}  
+.box-title {  
+  font-size: 22px;  
+  margin-bottom: 12px;  
+  font-weight: 600;  
+}  
+.subitem {  
+  margin-bottom: 8px;  
+  font-size: 16px;  
+  color: #555;  
+}  
+.subitem .recipe-name {  
+  display: inline-block;  
+  margin-left: 8px;  
+  color: #007aff;  
+}  
+.evaluation {  
+  font-style: italic;  
+  color: #888;  
+  margin-top: 10px;  
+  text-align: right;  
+}  
+.breakfast {  
+  border-left: 5px solid #ff9f7f;  
+}  
+.lunch {  
+  border-left: 5px solid #ffd56f;  
+}  
+.dinner {  
+  border-left: 5px solid #8fd694;  
+}  
+.overall {  
+  border: 1px solid #dcdcdc;  
+  border-radius: 8px;  
+  background-color: #fafafa;  
+  padding: 16px;  
+  margin-top: 20px;  
+  text-align: center;  
+}  
+.overall-title {  
+  font-size: 20px;  
+  color: #444;  
+  font-weight: 600;  
+  margin-bottom: 8px;  
+}  
+.overall-text {  
+  font-size: 16px;  
+  color: #666;  
+}  

@@ -1,0 +1,11 @@
+<view class="container">  
+    <view class="login-box">  
+      <text class="title">登录</text>  
+      <input class="input" placeholder=" 请输入用户名" bindinput="onPhoneInput" />  
+      <input class="input" placeholder=" 请输入密码" password="true" bindinput="onPasswordInput" />  
+      <view class="button-row">
+        <button class="login-button" bindtap="onLogin" open-type="switchTab">登录</button>  
+        <button class="register-button" bindtap="onRegister">注册</button>  
+      </view>
+      
+  </view>

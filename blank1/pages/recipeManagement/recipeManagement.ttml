@@ -1,0 +1,50 @@
+<!-- e:\study\dev\blank2116\blank1\pages\recipeManagement\recipeManagement.ttml -->
+<view class="container">  
+  <view class="header">我的菜谱管理</view>  
+  <view class="recipes-list">  
+    <block tt:for="{{recipes}}" tt:for-item="item" tt:key="recipeId">  
+      <view class="recipe-item" bind:tap="goToRecipe" data-id="{{item.recipeId}}">   
+        <image class="recipe-image" src="{{item.image}}" mode="aspectFill"></image>  
+        <view class="recipe-details">  
+          <view class="recipe-title">{{item.name}}</view>  
+          <view class="recipe-extra">  
+            <text>烹饪方式：{{item.cookingMethod}}</text>  
+          </view>  
+          <view class="user-feedback">  
+            <text>我的评分：{{item.userRating}}</text>  
+            <text>我的评论：{{item.comment}}</text>  
+          </view>  
+          <view class="actions">  
+            <button class="btn" catchtap="onOpenRate" data-recipeid="{{item.recipeId}}">评分</button>  
+            <button class="btn" catchtap="onDelete" data-recipeid="{{item.recipeId}}">删除</button>  
+            <button class="btn" catchtap="onOpenComment" data-recipeid="{{item.recipeId}}">评论</button>  
+          </view>  
+        </view>  
+      </view>  
+    </block>  
+  </view>  
+
+  <!-- 评分模态框 -->  
+  <view class="modal" hidden="{{!showRateModal}}">  
+    <view class="modal-content">  
+      <view class="modal-title">评分</view>  
+      <input class="input" placeholder="请输入0-5之间整数" value="{{tempRating}}" bind:input="onRatingInput"/>  
+      <view class="modal-actions">  
+        <button class="modal-btn" bind:tap="cancelRate">取消</button>  
+        <button class="modal-btn" bind:tap="confirmRate">确定</button>  
+      </view>  
+    </view>  
+  </view>  
+
+  <!-- 评论模态框 -->  
+  <view class="modal" hidden="{{!showCommentModal}}">  
+    <view class="modal-content">  
+      <view class="modal-title">评论</view>  
+      <textarea class="textarea" placeholder="请输入评论内容" value="{{tempComment}}" bind:input="onCommentInput"></textarea>  
+      <view class="modal-actions">  
+        <button class="modal-btn" bind:tap="cancelComment">取消</button>  
+        <button class="modal-btn" bind:tap="confirmComment">确定</button>  
+      </view>  
+    </view>  
+  </view>  
+</view>  

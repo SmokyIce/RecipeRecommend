@@ -1,0 +1,87 @@
+
+<!-- pages/recipe/recipe.ttml -->  
+<view class="container">  
+  <block tt:if="{{errorMsg}}">  
+    <text class="error">{{errorMsg}}</text>  
+  </block>  
+  <block tt:else>  
+    <image class="recipe-image" src="{{recipe.image}}" mode="aspectFill"></image>  
+    <view class="recipe-info">  
+      <text class="recipe-title">{{recipe.name}}</text>  
+      <!-- 详情信息，每个属性换行显示 -->  
+      <view class="recipe-detail">  
+         <text class="detail-item">烹饪方式：{{recipe.cookingMethod}}</text>  
+         <text class="detail-item">适合时段：{{recipe.suitableTime}}</text>  
+      </view>  
+      <!-- 标签区 -->  
+      <view class="recipe-tags">  
+         <text class="tags-label">标签：</text>  
+         <block tt:for="{{recipe.featureTags}}" tt:key="index">  
+           <text class="tag">{{item}}</text>  
+         </block>  
+      </view>  
+      <!-- 营养信息，每个属性换行 -->  
+      <view class="nutrition">  
+        <text class="nutrition-title">营养信息</text>  
+        <text class="nutrition-item">热量：{{recipe.calories}} kcal</text>  
+        <text class="nutrition-item">碳水化合物：{{recipe.carbohydrate}} g</text>  
+        <text class="nutrition-item">盐：{{recipe.salt}} g</text> 
+        <text class="nutrition-item">蛋白质：{{recipe.protein}} g</text>  
+        <text class="nutrition-item">脂肪：{{recipe.fat}} g</text>   
+      </view>  
+      <!-- 制作步骤 -->  
+      <view class="instructions">  
+        <text class="instructions-title">制作步骤：</text>  
+        <text class="instructions-content">{{recipe.instructions}}</text>  
+      </view>
+      <!-- 食材列表区域 -->  
+      <view class="ingredients-container">  
+       <view class="ingredients-header" bindtap="toggleIngredients">  
+          <text class="ingredients-title">食材列表</text>  
+          <text class="toggle-icon">{{ showIngredients ? '-' : '+' }}</text>  
+       </view>  
+       <block tt:if="{{showIngredients}}">  
+          <view class="ingredients-list">  
+            <block tt:for="{{ingredients}}" tt:key="ingredientId">  
+               <view class="ingredient-item">  
+                  <text class="name">{{item.ingredientName}}</text>  
+                  <text class="serving">{{item.servingCount}}</text>  
+                  <text class="unit">{{item.unitName}}</text>  
+               </view>  
+            </block>  
+          </view>  
+        </block>  
+      </view>
+
+      <!-- 评论区域 -->  
+      <view class="comments-container">  
+        <view class="comments-header" bindtap="toggleComments">  
+          <text class="comments-title">用户评论 ({{comments.length}})</text>  
+          <text class="toggle-icon">{{ showComments ? '-' : '+' }}</text>  
+        </view>  
+        <block tt:if="{{showComments}}">  
+          <view class="comments-list">  
+            <block tt:if="{{comments.length > 0}}">  
+              <block tt:for="{{comments}}" tt:key="{{item.userId + index}}">  
+                <view class="comment-item">  
+                  <view class="comment-header">  
+                    <text class="comment-username">{{item.userName}}</text>  
+                  </view>  
+                  <view class="comment-content">  
+                    <text class="comment-text">{{item.comment || '该用户未留下评论内容'}}</text>  
+                  </view>  
+                </view>  
+              </block>  
+            </block>  
+            <block tt:else>  
+              <view class="no-comments">  
+                <text class="no-comments-text">暂无评论</text>  
+              </view>  
+            </block>  
+          </view>  
+        </block>  
+      </view>
+
+    </view>  
+  </block>  
+</view>

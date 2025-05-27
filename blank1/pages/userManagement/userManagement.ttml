@@ -1,0 +1,21 @@
+<!-- e:\study\dev\aaaa\w\blank1\pages\userManagement\userManagement.ttml -->
+<view class="container">  
+  <form>
+        <!-- 年龄输入 -->  
+    <view class="form-item">  
+      <text>年龄：</text>  
+      <input type="number" value="{{age}}" bindinput="onAgeChange" placeholder="请输入年龄" />  
+    </view>  
+    
+    <!-- 昵称输入 -->  
+    <view class="form-item">  
+      <text>昵称：</text>  
+      <input type="text" value="{{nickname}}" bindinput="onNicknameChange" placeholder="请输入昵称" />  
+    </view>  
+    
+    
+    <!-- 提交按钮 -->  
+    <button class="set-button" bindtap="onSubmit" form-type="submit">提交</button>  
+  </form>
+    
+</view>

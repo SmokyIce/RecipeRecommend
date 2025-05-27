@@ -1,0 +1,157 @@
+<view class="container">  
+  <!-- 标题 -->  
+  <view class="header">智能食谱</view>  
+
+  <!-- 今日推荐食谱区域 -->  
+  <view class="today-section">  
+    <view class="section-header">  
+      <text class="section-title">今日推荐食谱</text>  
+      <button class="btn-add" bind:tap="addToday">一键添加</button>  
+    </view>  
+    <!-- 使用类似列表展示今日推荐食谱 -->  
+    <view class="recipe-list">  
+      <block tt:for="{{dailyRecipes}}" tt:key="recipeId">  
+        <view class="recipe-item" data-id="{{item.recipeId}}" bindtap="goToRecipe">  
+          <image class="recipe-image" src="{{item.image}}" mode="aspectFill"></image>  
+          <view class="recipe-info">  
+            <text class="recipe-title">{{item.name}}</text>  
+            <view class="recipe-detail">  
+              <text class="detail-item">烹饪方式：{{item.cookingMethod}}</text>  
+              <text class="detail-item">适合时段：{{item.suitableTime}}</text>  
+            </view>  
+            <view class="recipe-tags">  
+              <text class="tags-label">标签：</text>  
+              <block tt:for="{{item.featureTags}}" tt:key="index">  
+                <text class="tag">{{item}}</text>  
+              </block>  
+            </view>  
+            <view class="nutrition">  
+              <text class="nutrition-item">热量：{{item.calories}} kcal</text>  
+              <text class="nutrition-item">碳水化合物：{{item.carbohydrate}} g</text>  
+              <text class="nutrition-item">盐：{{item.salt}} g</text>  
+            </view>  
+            <button class="add-btn" catchtap="handleAddRecipe" data-id="{{item.recipeId}}">  
+              添加到我的食谱  
+            </button>  
+          </view>  
+        </view>  
+      </block>  
+    </view>  
+  </view>  
+
+  <!-- 主分类菜单 -->  
+  <view class="category-menu">  
+    <button class="cat-btn" data-category="智能推荐" bind:tap="onCategorySelect">智能推荐</button>  
+    <button class="cat-btn" data-category="营养排序" bind:tap="onCategorySelect">按营养成分排序</button>  
+    <button class="cat-btn" data-category="适宜时间" bind:tap="onCategorySelect">按适宜时间选择</button>  
+  </view>  
+
+  <!-- 子菜单：仅在“营养排序”时显示 -->  
+  <view class="sub-menu" tt:if="{{categoryChosen=='营养排序'}}">  
+    <button class="sub-btn" data-nutrition="calories" bind:tap="onSelectNutrition">卡路里</button>  
+    <button class="sub-btn" data-nutrition="carbohydrate" bind:tap="onSelectNutrition">碳水化合物</button>  
+    <button class="sub-btn" data-nutrition="fat" bind:tap="onSelectNutrition">脂肪</button>  
+    <button class="sub-btn" data-nutrition="protein" bind:tap="onSelectNutrition">蛋白质</button>  
+    <button class="sub-btn" data-nutrition="salt" bind:tap="onSelectNutrition">盐分</button>  
+  </view>  
+
+  <!-- 子菜单：仅在“适宜时间”时显示 -->  
+  <view class="sub-menu" tt:if="{{categoryChosen=='适宜时间'}}">  
+    <button class="sub-btn" data-time="早餐" bind:tap="onSelectTime">早餐</button>  
+    <button class="sub-btn" data-time="午餐" bind:tap="onSelectTime">午餐</button>  
+    <button class="sub-btn" data-time="晚餐" bind:tap="onSelectTime">晚餐</button>  
+  </view>  
+
+  <!-- 内容展示区域，根据主分类显示不同数据列表 -->  
+  <view class="recipe-list">  
+    <block tt:if="{{categoryChosen=='智能推荐'}}">  
+      <block tt:for="{{smartRecList}}" tt:key="recipeId">  
+        <view class="recipe-item" data-id="{{item.recipeId}}" bindtap="goToRecipe">  
+          <image class="recipe-image" src="{{item.image}}" mode="aspectFill"></image>  
+          <view class="recipe-info">  
+            <text class="recipe-title">{{item.name}}</text>  
+            <view class="recipe-detail">  
+              <text class="detail-item">烹饪方式：{{item.cookingMethod}}</text>  
+              <text class="detail-item">适合时段：{{item.suitableTime}}</text>  
+            </view>  
+            <view class="recipe-tags">  
+              <text class="tags-label">标签：</text>  
+              <block tt:for="{{item.featureTags}}" tt:key="index">  
+                <text class="tag">{{item}}</text>  
+              </block>  
+            </view>  
+            <view class="nutrition">  
+              <text class="nutrition-item">热量：{{item.calories}} kcal</text>  
+              <text class="nutrition-item">碳水化合物：{{item.carbohydrate}} g</text>  
+              <text class="nutrition-item">盐：{{item.salt}} g</text>  
+            </view>  
+            <button class="add-btn" catchtap="handleAddRecipe" data-id="{{item.recipeId}}">  
+              添加到我的食谱  
+            </button>  
+          </view>  
+        </view>  
+      </block>  
+    </block>  
+    <block tt:if="{{categoryChosen=='营养排序'}}">  
+      <block tt:for="{{nutritionList}}" tt:key="recipeId">  
+        <view class="recipe-item" data-id="{{item.recipeId}}" bindtap="goToRecipe">  
+          <image class="recipe-image" src="{{item.image}}" mode="aspectFill"></image>  
+          <view class="recipe-info">  
+            <text class="recipe-title">{{item.name}}</text>  
+            <view class="recipe-detail">  
+              <text class="detail-item">烹饪方式：{{item.cookingMethod}}</text>  
+              <text class="detail-item">适合时段：{{item.suitableTime}}</text>  
+            </view>  
+            <view class="recipe-tags">  
+              <text class="tags-label">标签：</text>  
+              <block tt:for="{{item.featureTags}}" tt:key="index">  
+                <text class="tag">{{item}}</text>  
+              </block>  
+            </view>  
+            <view class="nutrition">  
+              <text class="nutrition-item">热量：{{item.calories}} kcal</text>  
+              <text class="nutrition-item">碳水化合物：{{item.carbohydrate}} g</text>  
+              <text class="nutrition-item">盐：{{item.salt}} g</text>  
+            </view>  
+            <button class="add-btn" catchtap="handleAddRecipe" data-id="{{item.recipeId}}">  
+              添加到我的食谱  
+            </button>  
+          </view>  
+        </view>  
+      </block>  
+    </block>  
+    <block tt:if="{{categoryChosen=='适宜时间'}}">  
+      <block tt:for="{{timeList}}" tt:key="recipeId">  
+        <view class="recipe-item" data-id="{{item.recipeId}}" bindtap="goToRecipe">  
+          <image class="recipe-image" src="{{item.image}}" mode="aspectFill"></image>  
+          <view class="recipe-info">  
+            <text class="recipe-title">{{item.name}}</text>  
+            <view class="recipe-detail">  
+              <text class="detail-item">烹饪方式：{{item.cookingMethod}}</text>  
+              <text class="detail-item">适合时段：{{item.suitableTime}}</text>  
+            </view>  
+            <view class="recipe-tags">  
+              <text class="tags-label">标签：</text>  
+              <block tt:for="{{item.featureTags}}" tt:key="index">  
+                <text class="tag">{{item}}</text>  
+              </block>  
+            </view>  
+            <view class="nutrition">  
+              <text class="nutrition-item">热量：{{item.calories}} kcal</text>  
+              <text class="nutrition-item">碳水化合物：{{item.carbohydrate}} g</text>  
+              <text class="nutrition-item">盐：{{item.salt}} g</text>  
+            </view>  
+            <button class="add-btn" catchtap="handleAddRecipe" data-id="{{item.recipeId}}">  
+              添加到我的食谱  
+            </button>  
+          </view>  
+        </view>  
+      </block>  
+    </block>  
+  </view>  
+
+  <!-- 底部导航 -->  
+  <view class="nav-buttons">  
+    <button class="btn-nav" bind:tap="goToUser">个人中心</button>  
+  </view>  
+</view>  

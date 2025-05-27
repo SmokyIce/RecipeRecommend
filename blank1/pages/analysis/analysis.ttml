@@ -1,0 +1,80 @@
+<!-- e:\douyin\miniprogram\blank1\pages\analysis\analysis.ttml -->  
+<!-- e:\douyin\miniprogram\blank1\pages\analysis\analysis.ttml -->  
+<view class="container">  
+  <text class="title">智能分析</text>  
+  
+  <!-- 早餐分析框 -->  
+  <view class="box breakfast">  
+    <text class="box-title">早餐</text>  
+    <view class="subitem">  
+      <text>食谱：</text>  
+      <block tt:for="{{breakfastData.recipes}}" tt:for-item="item" tt:key="recipeId">  
+        <text class="recipe-name">{{item.name}}</text>  
+      </block>  
+    </view>  
+    <view class="subitem">  
+      <text>卡路里总和：{{breakfastData.totalCalories}}kcal</text>  
+    </view>  
+    <view class="subitem">  
+      <text>碳水化合物总和：{{breakfastData.totalCarbohydrate}}g</text>  
+    </view>  
+    <view class="subitem">  
+      <text>盐分总和：{{breakfastData.totalSalt}}g</text>  
+    </view>  
+    <view class="subitem evaluation">  
+      <text>早餐评价：{{breakfastData.evaluation}}</text>  
+    </view>  
+  </view>  
+  
+  <!-- 午餐分析框 -->  
+  <view class="box lunch">  
+    <text class="box-title">午餐</text>  
+    <view class="subitem">  
+      <text>食谱：</text>  
+      <block tt:for="{{lunchData.recipes}}" tt:for-item="item" tt:key="recipeId">  
+        <text class="recipe-name">{{item.name}}</text>  
+      </block>  
+    </view>  
+    <view class="subitem">  
+      <text>卡路里总和：{{lunchData.totalCalories}}kcal</text>  
+    </view>  
+    <view class="subitem">  
+      <text>碳水化合物总和：{{lunchData.totalCarbohydrate}}g</text>  
+    </view>  
+    <view class="subitem">  
+      <text>盐分总和：{{lunchData.totalSalt}}g</text>  
+    </view>  
+    <view class="subitem evaluation">  
+      <text>午餐评价：{{lunchData.evaluation}}</text>  
+    </view>  
+  </view>  
+  
+  <!-- 晚餐分析框 -->  
+  <view class="box dinner">  
+    <text class="box-title">晚餐</text>  
+    <view class="subitem">  
+      <text>食谱：</text>  
+      <block tt:for="{{dinnerData.recipes}}" tt:for-item="item" tt:key="recipeId">  
+        <text class="recipe-name">{{item.name}}</text>  
+      </block>  
+    </view>  
+    <view class="subitem">  
+      <text>卡路里总和：{{dinnerData.totalCalories}}kcal</text>  
+    </view>  
+    <view class="subitem">  
+      <text>碳水化合物总和：{{dinnerData.totalCarbohydrate}}g</text>  
+    </view>  
+    <view class="subitem">  
+      <text>盐分总和：{{dinnerData.totalSalt}}g</text>  
+    </view>  
+    <view class="subitem evaluation">  
+      <text>晚餐评价：{{dinnerData.evaluation}}</text>  
+    </view>  
+  </view>  
+  
+  <!-- 今日食谱总评 -->  
+  <view class="overall">  
+    <text class="overall-title">今日食谱总评：</text>  
+    <text class="overall-text">{{overallEvaluation}}</text>  
+  </view>  
+</view>  
