@@ -1,4 +1,4 @@
-package com.douyin.dto;
+package com.douyin.dto.userRecipe;
 
 import lombok.Data;
 

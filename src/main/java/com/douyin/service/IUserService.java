@@ -4,8 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
 import com.douyin.dto.UpdateUserDTO;
-import com.douyin.dto.UserRegisterDTO;
+import com.douyin.dto.userRecipe.UserRegisterDTO;
 import com.douyin.entity.User;
+import jakarta.servlet.http.HttpSession;
 
 
 /**
@@ -17,7 +18,7 @@ import com.douyin.entity.User;
  */
 public interface IUserService extends IService<User> {
 
-    Result login(LoginFormDTO loginForm);
+    Result login(LoginFormDTO loginForm, HttpSession session);
 
     Result logout();
 

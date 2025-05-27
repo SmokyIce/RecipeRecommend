@@ -23,10 +23,7 @@ public class RecipeController {
      */
     @GetMapping("recipes")
     public Result getRecipes() {
-        List<Recipe> typeList = recipeService
-                .query().list();
-        JSONUtil.toJsonStr(typeList);
-        return Result.ok(typeList);
+        return recipeService.getAllRecipes();
     }
 
     @GetMapping("/daily")
@@ -40,7 +37,7 @@ public class RecipeController {
             return Result.fail("推荐服务异常: " + e.getMessage());
         }
     }
-    // TODO 获取食谱食材
+    // 获取食谱食材
     @GetMapping("getIngredients")
     public Result getIngredients(@RequestParam("recipeId") String recipeId){
 

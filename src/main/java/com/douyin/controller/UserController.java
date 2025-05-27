@@ -4,10 +4,11 @@ package com.douyin.controller;
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
 import com.douyin.dto.UpdateUserDTO;
-import com.douyin.dto.UserRegisterDTO;
+import com.douyin.dto.userRecipe.UserRegisterDTO;
 import com.douyin.service.IUserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,18 +27,23 @@ import jakarta.servlet.http.HttpSession;
 public class UserController {
 
     @Resource
+    private ChatClient chatClient;
+    @Resource
     private IUserService userService;
 
+    @GetMapping("/sss")
+    public String test(){
+        return chatClient.prompt().user("你是谁").call().content();
+    }
     /**
      * 登录功能
      * @param loginForm 登录信息表，包含密码，用户名
      * @return 登录是否成功，成功返回登录token，失败返回用户信息
      */
     @PostMapping("/login")
-    public Result login(@RequestBody LoginFormDTO loginForm){
-        log.info("登录信息:{}", loginForm);
+    public Result login(@RequestBody LoginFormDTO loginForm, HttpSession session){
         // 实现登录功能
-        return userService.login(loginForm);
+        return userService.login(loginForm, session);
     }
 
     /**

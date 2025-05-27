@@ -27,6 +27,11 @@ public class UserRecipeController {
         return userRecipeServer.getUserRecipes(token);
     }
 
+    @GetMapping("/getCommentByRecipeId")
+    public Result getCommentByRecipeId(@RequestParam("recipeId") String recipeId) {
+        return userRecipeServer.getCommentByRecipeId(recipeId);
+    }
+
     /**
      * 
      * @param token 用户名称
@@ -64,5 +69,10 @@ public class UserRecipeController {
     @GetMapping("/recommend")
     public Result getReference(@RequestHeader(value = "authorization", required = false) String token){
         return userRecipeServer.getReferenceRecipes(token);
+    }
+
+    @GetMapping("/intellectComment")
+    public Result getIntellectComment(@RequestHeader(value = "authorization", required = false) String token){
+        return userRecipeServer.getIntellectComment(token);
     }
 }

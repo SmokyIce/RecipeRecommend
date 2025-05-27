@@ -4,19 +4,21 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.douyin.dto.AddUserRecipeDTO;
 import com.douyin.dto.Result;
-import com.douyin.dto.UserRecipeAnaDTO;
-import com.douyin.dto.UserRecipeDTO;
+import com.douyin.dto.userRecipe.CommentDTO;
+import com.douyin.dto.userRecipe.UserRecipeDTO;
 import com.douyin.entity.Recipe;
-import com.douyin.entity.User;
 import com.douyin.entity.UserRecipe;
 import com.douyin.mapper.RecipeMapper;
 import com.douyin.mapper.UserRecipeMapper;
 import com.douyin.service.IUserRecipeServer;
+import jakarta.annotation.Resource;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.douyin.utils.RecipeUtil.recommendRecipes;
 
@@ -25,12 +27,18 @@ public class UserRecipeServiceImpl extends ServiceImpl<UserRecipeMapper, UserRec
 
     @Autowired
     private final UserRecipeMapper userRecipeMapper;
-    @Autowired
+    @Resource
     private final RecipeMapper recipeMapper;
 
-    public UserRecipeServiceImpl(UserRecipeMapper userRecipeMapper, RecipeMapper recipeMapper) {
+    @Resource
+    private final ChatClient chatClient;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    public UserRecipeServiceImpl(UserRecipeMapper userRecipeMapper, RecipeMapper recipeMapper, ChatClient chatClient) {
         this.userRecipeMapper = userRecipeMapper;
         this.recipeMapper = recipeMapper;
+        this.chatClient = chatClient;
     }
 
     @Override
@@ -61,15 +69,55 @@ public class UserRecipeServiceImpl extends ServiceImpl<UserRecipeMapper, UserRec
         // 根据用户已选记录，做推荐
         List<Recipe> recommendations = recommendRecipes(token, recipes, userRecipes);
 
-        System.out.println("\n为用户 " + token + " 推荐的食谱：");
         if (recommendations.isEmpty()) {
-            System.out.println("没有找到合适的推荐");
-        } else {
-            for (Recipe recipe : recommendations) {
-                System.out.println(recipe.getRecipeId() + " - " + recipe.getName());
-            }
+            Result.fail("没有合适的推荐");
         }
         return Result.ok(recommendations);
+    }
+
+    @Override
+    public Result getCommentByRecipeId(String recipeId) {
+        if (StrUtil.isBlank(recipeId)) {
+            return Result.fail("请输入正确的参数");
+        }
+        List<CommentDTO> comment = userRecipeMapper.getComment(recipeId);
+        if (comment.isEmpty()) {
+            return Result.fail("没有找到评论");
+        }
+        return Result.ok(comment);
+    }
+
+    @Override
+    public Result getIntellectComment(String token) {
+        if (StrUtil.isBlank(token)) {
+            return Result.fail("请重新登录");
+        }
+        List<Recipe> data =(List<Recipe>) getReferenceRecipes(token).getData();
+        String s = stringRedisTemplate.opsForValue().get("intellectComment" + token);
+        if(StrUtil.isNotBlank(s)) {
+            return Result.ok(s);
+        }
+
+        if(Boolean.TRUE.equals(stringRedisTemplate.opsForValue().setIfAbsent("lockInte", "1"))){
+            stringRedisTemplate.expire("lockInte", 5, TimeUnit.MINUTES);
+            new Thread(() -> {
+                try{
+                    if(data.isEmpty()) throw new RuntimeException("数据获取失败");
+                    System.out.println(data);
+                    String content = chatClient.prompt()
+                            .user("介绍" + data.get(0).getName()  + "，" + data.get(1).getName()  + "，" + data.get(2).getName()  + "，" + "这几个食谱的优点")
+                            .call()
+                            .content();
+                    if (StrUtil.isNotBlank(content)) {
+                        stringRedisTemplate.opsForValue().set("intellectComment" + token, content);
+                        stringRedisTemplate.expire("intellectComment" + token, 12, TimeUnit.HOURS);
+                    }
+                }finally {
+                    stringRedisTemplate.delete("lockInte");
+                }
+            }).start();
+        }
+        return Result.ok("正在获取中...请稍后");
     }
 
 

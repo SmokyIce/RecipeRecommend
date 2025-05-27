@@ -11,9 +11,13 @@
         FROM recipes r
                  JOIN recipe_ingredients ri ON r.recipe_id = ri.recipe_id
                  JOIN ingredients i ON ri.ingredient_id = i.ingredient_id
-        WHERE r.recipe_id = #{recipeId};
+        <where>
+            <if test="recipeId != null">
+                and r.recipe_id = #{recipeId};
+            </if>
+        </where>
     </select>
-    <select id="getRecipes" parameterType="string" resultType="com.douyin.entity.Recipe">
+    <select id="getRecipes" resultType="com.douyin.entity.Recipe">
         SELECT recipe_id AS recipeId,
                name AS name,
                feature_tags AS featureTags,

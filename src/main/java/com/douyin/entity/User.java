@@ -38,7 +38,7 @@ public class User implements Serializable {
     private String userId = "noname";
 
     /**
-     * 密码，加密存储
+     * 密码
      */
     @Column(nullable = false)
     private String password = null;

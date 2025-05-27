@@ -2,18 +2,20 @@ package com.douyin.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.douyin.dto.LoginFormDTO;
 import com.douyin.dto.Result;
 import com.douyin.dto.UpdateUserDTO;
-import com.douyin.dto.UserRegisterDTO;
+import com.douyin.dto.userRecipe.UserRegisterDTO;
 import com.douyin.entity.User;
 import com.douyin.mapper.UserMapper;
 import com.douyin.service.IUserService;
+import com.douyin.utils.UserHolder;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.douyin.utils.RegexUtils.isPhoneInvalid;
 import static com.douyin.utils.RegexUtils.isPwdInvalid;
 import static com.douyin.utils.SystemConstants.USER_NAME_PREFIX;
 
@@ -40,7 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @return 登录用户id
      */
     @Override
-    public Result login(LoginFormDTO loginForm) {
+    public Result login(LoginFormDTO loginForm, HttpSession session) {
         //1.校验手机密码
         String phone = loginForm.getPhone();
         String password = loginForm.getPassword();
@@ -54,6 +56,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //4.匹配则生成token
         String token = user.getUserId();
+        UserHolder.saveUser(user);
 
         //5.返回token
         return Result.ok(token);
@@ -77,7 +80,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public Result register(UserRegisterDTO request) {
         //注册
-        //1.查询手机号是否被占用
+        //1.查询手机号是否合理
+        if (isPhoneInvalid(request.getPhone())) {
+            return Result.fail("手机号错误");
+        }
         User existUser = query().eq("phone", request.getPhone()).one();
         if(existUser != null){
             return Result.fail("手机号被占用");

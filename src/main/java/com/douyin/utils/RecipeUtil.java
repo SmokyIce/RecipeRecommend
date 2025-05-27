@@ -1,12 +1,29 @@
 package com.douyin.utils;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.douyin.dto.Result;
 import com.douyin.entity.Recipe;
 import com.douyin.entity.UserRecipe;
+import jakarta.annotation.Resource;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RecipeUtil {
+
+    @Resource
+    private final StringRedisTemplate stringRedisTemplate;
+
+    public RecipeUtil(StringRedisTemplate stringRedisTemplate) {
+        this.stringRedisTemplate = stringRedisTemplate;
+    }
+
+
+
     /**
      * 计算两组 feature_tags 之间的 Jaccard 相似度
      */
@@ -69,7 +86,7 @@ public class RecipeUtil {
                 .filter(entry -> entry.getValue() > 0)
                 .sorted(Map.Entry.<Recipe, Double>comparingByValue().reversed())
                 .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()).subList(0,3);
 
         return recommendations;
     }
